@@ -1,0 +1,53 @@
+{% extends "registration/base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="container" style="margin-top: 25vh; background-color: white; width: 550px; border-radius: 10px;">
+    {% if form.errors %}
+        <p> Password or Username is incorrect</p>
+    {% endif %}
+    <div class=" panel panel-default" style="padding: 20px;">
+        <div class="panel-heading">
+            <p>Welcome to,</p>
+            <h2 class="heading">Grammer</h2>
+            <h5 class="text-center"> Sign In</h5>
+        </div>
+        <div class="panel-body">
+            <form action="/accounts/login/" method="post">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" style="width:50%; margin-left: 130px;" value="Login">                            
+                </div>
+                <input type="hidden" name="text" value="{{next}}">                        
+            </form>
+        </div>
+        <div class="panel-footer">
+            <p>To create an account.Click <span><a href="/accounts/register">Create.</a></span></p>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background:linear-gradient(rgba(245, 239, 239,.8), rgba(245, 239, 239,.8)),url('https://media1.giphy.com/media/l1J3FTYpqRl71VExW/giphy.gif');        
+        background-size: cover;
+    }
+    .heading {
+        text-align: center;
+        font-family: 'Lobster';   
+        font-size: 55px;                                                   
+        background-image: linear-gradient(to right, #de6161, #2657eb); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background-image: -webkit-linear-gradient(to right, #A5FECB, #20BDFF, #5433FF);  /* Chrome 10-25, Safari 5.1-6 */
+        background-image: #5433FF;  /* fallback for old browsers */                
+        background-clip: text;                
+        text-decoration-color: transparent;
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        -webkit-text-fill-color: transparent; 
+        -moz-text-fill-color: transparent;
+        -webkit-text-stroke: 0.001em black;                
+
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+    {% block content %}
+    {{ block.super}}
+    {% include "navbar.html" %}
+        <div class="container" style="border-left: solid  lightgrey 0.02em; margin-top: 30px;">            
+            <div class="row">                
+                <div class="col-md-6">
+                    <div class="icon" style="width: 270px; height: 270px; background:url('{{ profile.prof_pic.url }}'); background-size: cover; margin-left: 100px; margin-top: 20px; border-radius: 50%;">
+                    </div>
+                </div>
+                <div class="col-md-6" style="margin-top: 40px; padding-left: 40px;">
+                    <div class="container">
+                        <h2 style="display: inline-block;padding-right: 60px;">{{profile.username}}</h2>
+                        
+                        <form action="{% url 'follow' profile.user.id %}" method="POST" style="display: inline-block;">
+                        {% csrf_token %}                            
+                            {% if is_followed %}
+                                <button type = "submit" class="btn btn-outline-primary" name="profile_id" value="{{profile.id}}">Following</button>
+                            {% else %}
+                                <button type = "submit" class="btn btn-primary" name="profile_id" value="{{profile.id}}">Follow</button>
+                            {% endif %}
+                        </form>                        
+
+                        <h5>{{profile.user}}</h5>     
+                    </div>
+                    <br>
+                    <div class="container">
+                        <h5 style="display: inline-block; padding-left: 20px;"><span style="font-size: 25px;"><strong>{{feeds.count}}</strong></span> Posts</h5>
+                        <h5 style="display: inline-block; padding-left: 40px;"><span style="font-size: 25px;"><strong>{{profile.followers.count}}</strong></span> Followers</h5>
+                        <h5 style="display: inline-block; padding-left: 20px;"><span style="font-size: 25px;"><strong>{{profile.following.count}}</strong></span> Following</h5>
+                    </div>
+                    <div class="container" style="padding-top:20px;">
+                        <h5>Bio:</h5></div>
+                        <div class="container">
+                            <p style="font-style:oblique;">{{profile.bio}}</p>
+                        </div>
+                    </div>                
+                </div>                            
+            </div>
+            <br>
+            <hr>            
+            <ul class= "container">
+            {% for feed in feeds %}
+                <li style="display: inline-block;">                                                       
+                    <a href="{% url 'detail' feed.pk %}">
+                    <div class="icon" style="width: 270px; height: 270px; background:url('{{ feed.upload_image.url }}'); background-size: cover; margin-left: 20px; margin-top: 20px;">                                                                        
+                    </div></a>
+                </li> 
+            {% endfor %}   
+            </ul>                            
+        </div>        
+    {% endblock %}

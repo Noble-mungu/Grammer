@@ -1,0 +1,66 @@
+{% extends "registration/base.html"%} {% load bootstrap4 %}
+{% block content %}
+<div class="container signform">
+    <div class="row">
+        <!-- Empty div-->
+        <div class="col-sm-2 col-md-6" style="background: url(https://images.unsplash.com/photo-1567005263627-cf72f785f398?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60) ; background-size: cover;">
+        </div>
+        <div class="col-sm-8 col-md-6">
+            <div class="container" style="width: 80%;">
+                {% if forms.errors %}
+                    <p> Some information Might be Incorrect</p>
+                {% endif %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="heading">Grammer</h2>
+                        <h5 class="text-centre" style="text-align: center;">Sign Up</h5>
+                    </div>
+                    <div class="panel-body">
+                        <form action="/accounts/register/" method="post">
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary" style="width:50%; margin-left: 25%;" value="Sign Up">                            
+                            </div>
+
+                            <input type="hidden" name="next" value="{{next}}">                            
+                        </form>                    
+                    </div>
+                    <div class="panel-footer">
+                        <p>You have an account already. Click <span><a href="/accounts/login"> Log in</a></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    body {
+        background: #de6161;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #2657eb, #de6161);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #2657eb, #de6161); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+    .signform {
+        background-color: white;
+        margin-top: 5vh;
+        border-radius: 10px;
+    }
+    .heading {
+        text-align: center;
+        font-family: 'Lobster';   
+        font-size: 55px;                                                   
+        background-image: linear-gradient(to right, #de6161, #2657eb); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background-image: -webkit-linear-gradient(to right, #A5FECB, #20BDFF, #5433FF);  /* Chrome 10-25, Safari 5.1-6 */
+        background-image: #5433FF;  /* fallback for old browsers */                
+        background-clip: text;                
+        text-decoration-color: transparent;
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        -webkit-text-fill-color: transparent; 
+        -moz-text-fill-color: transparent;
+        -webkit-text-stroke: 0.001em black;                
+
+    }
+</style>
+
+{% endblock %}

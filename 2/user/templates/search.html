@@ -1,0 +1,17 @@
+{%extends 'base.html' %}
+    {% block content%}
+    {{block.super}}    
+    {% include "navbar.html" %}
+
+        <div class="container" style="width: 500px; margin-top: 50px; text-align: center;">
+            {% if searchs %}
+                {%for search in searchs %}
+                    <p style="display: inline-block; padding-right: 20px;"><a href="{% url 'profilevisit' search.user.id %}" ><img src=" {{ search.prof_pic.url }}" class= "post" alt="Image" style="width: 90px; height: 90px; border-radius: 50%;"></a></p>                                
+                    <a href="{% url 'profilevisit' search.user.id %}" ><h3 style="display: inline-block; padding-right: 30%;">{{search.username}}</h3></a>
+                    <button style="display: inline-block;" class="btn btn-primary"> Follow</button>
+                    <hr>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+    {% endblock %}  

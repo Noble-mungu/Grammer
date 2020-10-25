@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+    {% block content %}
+    {{ block.super}}
+    {% include "navbar.html" %}
+        <div class="container" style="border-left: solid  lightgrey 0.02em; margin-top: 30px;">            
+            <div class="row">
+                {% if profile %}                
+                <div class="col-md-6">
+                    <div class="icon" style="width: 270px; height: 270px; background:url('{{ profile.prof_pic.url }}'); background-size: cover; margin-left: 100px; margin-top: 20px; border-radius: 50%;">
+                    </div>
+                </div>
+                <div class="col-md-6" style="margin-top: 40px; padding-left: 40px;">
+                    <div class="container">                        
+                        <h2 style="display: inline-block;">{{profile.username}}</h2>                         
+                        <h5>{{current_user}}</h5>                         
+                        <p><a href="{% url 'editprofile' current_user.id %}"><button>Edit profile </button></a></p>                        
+                    </div>
+                    <div class="container">
+                        <h5 style="display: inline-block; padding-left: 20px;"><span style="font-size: 25px;"><strong>{{feeds.count}}</strong></span> Posts</h5>
+                        <h5 style="display: inline-block; padding-left: 40px;"><span style="font-size: 25px;"><strong>{{profile.followers.count}}</strong></span> Followers</h5>
+                        <h5 style="display: inline-block; padding-left: 20px;"><span style="font-size: 25px;"><strong>{{profile.following.count}}</strong></span> Following</h5>
+                    </div>
+                    <div class="container" style="padding-top:20px;">
+                        <h5>Bio:</h5></div>
+                        <div class="container">
+                            <p style="font-style:oblique;">{{profile.bio}}</p>
+                        </div>
+                    </div>                
+                </div>  
+                {% else %}                
+                <div class="col-md-6">
+                    <div class="icon" style="width: 270px; height: 270px; background:url('https://www.freepngimg.com/download/youtube/63841-profile-twitch-youtube-avatar-discord-free-download-image.png'); background-size: cover; margin-left: 100px; margin-top: 20px; border-radius: 50%;">
+                    </div>
+                </div>
+                <div class="col-md-6" style="margin-top: 40px; padding-left: 40px;">
+                    <div class="container">                                   
+                        <h2 style="display: inline-block;">{{current_user}}</h2>                         
+                        <h5>{{current_user}}</h5>                         
+                        <p><a href="{% url 'createprofile'%}"><button>Create profile</button></a></p>                        
+                    </div>
+                    <div class="container">
+                        <h5 style="display: inline-block; padding-left: 20px;"><span style="font-size: 25px;"><strong>-</strong></span> Posters</h5>
+                        <h5 style="display: inline-block; padding-left: 40px;"><span style="font-size: 25px;"><strong>-</strong></span> Followers</h5>
+                        <h5 style="display: inline-block; padding-left: 20px;"><span style="font-size: 25px;"><strong>-</strong></span> Following</h5>
+                    </div>
+                    <div class="container" style="padding-top:20px;">
+                        <h5>Bio:</h5></div>
+                        <div class="container">
+                            <p style="font-style:oblique;">Write something about yourself </p>
+                        </div>
+                    </div>                
+                </div>       
+                <em style="text-align: center;">This is a default profile. Click create profile to get started</em>                                   
+                {% endif %}
+            </div>
+            <br>
+            <hr>            
+            <ul class= "container">
+            {% if feeds %}
+                {% for feed in feeds %}
+                    <li style="display: inline-block;"> 
+                        <a href="{% url 'detail' feed.pk %}">                                                      
+                        <div class="icon" style="width: 270px; height: 270px; background:url('{{ feed.upload_image.url }}'); background-size: cover; margin-left: 20px; margin-top: 20px;">                                                                        
+                        </div></a>
+                    </li> 
+                {% endfor %}   
+            {% else %}
+                <h2 style="text-align: center; color: lightslategray; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 30px; padding-top: 20vh;"> No feed </h2>
+            {% endif %}
+            </ul>                            
+        </div>        
+    {% endblock %}

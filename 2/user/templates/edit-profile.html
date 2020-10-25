@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+    {% block content %}
+    {{ block.super}}    
+    {{form.media}}  
+        <nav class="navbar-fluid">
+            <h2 class="heading"><a href="{% url 'home' %}" class="heading-link">Grammer</a></h2>
+        </nav>        
+        <div class="container mini-nav">
+            <div class="row" style="padding: 5px;">            
+                <div class="col-md-7">
+                    <form class="form-inline d-flex justify-content-center md-form form-sm active-purple-2 mt-2" >
+                        <input class="form-control form-control-sm mr-3 w-75" style="background: transparent;border: none;" type="text" placeholder="Search" aria-label="Search">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </form>
+                </div>
+                <div class="col-md-5" style="text-align: center;">                    
+                    <a href="{% url 'new-post'%}"  class="mininav-item" style="padding-right: 55px;"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                
+                    <a href="{% url 'home' %}" class="mininav-item" style="padding-right: 55px;"><i class="fa fa-home" aria-hidden="true"></i></a>                
+                
+                    <a href="/logout" class="mininav-item" >| <i class="fa fa-sign-out" aria-hidden="true"></i></a>                                        
+                </div>
+            </div>
+        </div>            
+        <div class="container" style="border-left: solid  lightgrey 0.02em; margin-top: 30px; margin-top: 15vh;">                       
+            <a href="{% url 'profile' current_user.id %}">Back</a>
+            <div class="row">                            
+                <div class="col-sm-11 col-md-6">
+                    <div class="col-md-5">
+                        <div class="icon" style="width: 380px; height: 380px; background:url('{{ profiles.prof_pic.url }}'); background-size: cover; margin-left: 100px; margin-top: 20px; border-radius: 50%;">
+                            <button class="btn" data-toggle="modal" style="width: 100%; background-color: rgba(241, 217, 217,.5);" data-target="#a{{profiles.id}}">Edit</btn>                        
+                        </div>                    
+                    </div>                
+                </div>                                
+                <div class="col col-md-6" style="margin-top: 40px; padding-left: 40px;">
+                    <div class="container">
+                        <h2 style="display: inline-block;">{{profiles.user}}</h2>                        
+                    </div>                    
+                    <div class="container" style="padding-top:20px;">
+                        <h5 style="display: inline-block;padding-right: 20vw;">Bio:</h5>                        
+                        <div class="container">                            
+                            <p style="font-style:oblique;">{{profiles.bio}}</p>                            
+                        </div>
+                    </div>                    
+                </div>                            
+            </div>
+        </div>
+        <!-- Edit Profile Modal -->
+        <div class="modal fade" id="a{{profiles.id}}" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered"  role="document">
+                <div class="modal-content"> 
+                    <div class="modal-body" style="height: 500px;">
+                        <form action="{%url 'editprofile' current_user.id %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                    
+                            {% bootstrap_form editprofile %}
+                            <input type="submit" class="btn btn-success btn-lg" value="Change">
+                        </form> 
+                    </div>    
+                </div>
+            </div>
+        </div>
+        <style>
+            .pic-edit {
+                background-color: azure;
+                text-align: center;
+                position: absolute;
+                width: 290px;
+                margin-left: 45px; 
+                margin-top: 45vh; 
+                padding: 15px 0;
+            }            
+            .navbar-fluid {
+                background-color: white;
+                border-bottom:solid lightgrey .01em;                
+            }
+            .active-purple-2 input.form-control[type=text]:focus:not([readonly]) {
+              border-bottom: 1px solid rgb(206, 147, 216);
+              box-shadow: 0 1px 0 0 #ce93d8;
+            }
+            .active-purple .fa, .active-purple-2 .fa {
+              color: #ce93d8;
+            }
+            .mini-nav {
+                background: rgba(206, 147, 216,.5);
+                margin-top: 5px;
+            }
+            .mininav-item {
+                display: inline-block;
+                font-size: 27px;
+                color: rgb(105, 101, 107);
+                font-family: 'Times New Roman', Times, serif;
+            }
+            .user-profile {
+                width: 40px; 
+                height: 40px; 
+                border-radius: 50%;  
+                display: inline-block;
+            } 
+            .heading {
+                text-align: center;
+                font-family: 'Lobster';                                                
+            }
+            .heading-link {
+                background-image: linear-gradient(to right, #de6161, #2657eb); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                background-image: -webkit-linear-gradient(to right, #A5FECB, #20BDFF, #5433FF);  /* Chrome 10-25, Safari 5.1-6 */
+                background-image: #5433FF;  /* fallback for old browsers */                
+                background-clip: text;                
+                text-decoration-color: transparent;
+                -webkit-background-clip: text;
+                -moz-background-clip: text;
+                -webkit-text-fill-color: transparent; 
+                -moz-text-fill-color: transparent;
+                -webkit-text-stroke: 0.01em black;                
+            }       
+        </style>        
+    {% endblock %}
+
+
+    <!--<a href="{% url 'profile' profile.id %}">Back</a>-->

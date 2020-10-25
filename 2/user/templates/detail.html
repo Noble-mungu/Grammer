@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{{block.super}}
+{% block content %}
+{% include "navbar.html" %}
+<div class="container">                
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-md-11 holder" style="max-height: 82vh; overflow-y: scroll;">                                                                        
+            <div class="post">
+                <br>
+                <div class="card" style="padding: 0 15px; width: 80%; margin-left: 10%;">                    
+                    <div class="container-fluid" style="background-color: white; padding-top: 5px;">
+                        <a href="{% url 'profilevisit' post.user.id %}" ><img src=" {{ post.profiles.prof_pic.url }}" class= "post" alt="Image" style="width: 40px; height: 40px; border-radius: 50%;  display: inline-block;"></a>
+                        <p style="display: inline-block;width: 10px;"></p>                                    
+                        <a href="{% url 'profilevisit' post.user.id %}" ><p style="display: inline-block; color: black;">{{post.user}}</p></a>
+                        <p style="display: inline-block;width: 10px;"></p>                              
+                    </div>
+                    <div class="row" style="background-color: black; width: fit-content; max-height:650px;">                                
+                        <img src="{{ post.upload_image.url }}" class= "post" alt="Image" style="height: 650px; width:100%; object-fit: contain;">                                  
+                    </div>                                                
+                        <br>
+                        <div class="container">
+                            <div class="row" style="text-align: center;">                                        
+                                <div class="col">
+                                    <form action="{% url 'like_post' post.user.id %}" method="POST" >
+                                    {% csrf_token %}                                                
+                                        {% if is_liked %}
+                                            <button type ="submit" class="btn" style="font-size: 25px;" name="post_id" value="{{post.id}}"><i class="fa fa-heart" style="color: red;" aria-hidden="true"></i></button>
+                                        {% else %}
+                                            <button type ="submit" class="btn" style="font-size: 25px;" name="post_id" value="{{post.id}}"><i class="fa fa-heart-o"aria-hidden="true"></i></button>
+                                        {% endif %}                                                
+                                    </form>   
+                                </div>
+                                <div class="col">                                                                             
+                                    <p style="margin-top: 15px;">{{ post.likes.count }} Likes</p>
+                                </div>                                                  
+                            </div>                                    
+                        </div>                                                                                        
+                        <hr>
+                        <h5 >{{ post.image_name}}</h5>                    
+                        {% autoescape on %}
+                            <p style="padding-left: 40px;">{{ post.caption| safe}}</p>
+                        {% endautoescape %}                                                        
+                        <div class="container" style="padding-bottom: 15px;">                        
+                            {% if commentss %}                                                                                                                                                    
+                                {% for comment in commentss %}
+                                <div class="row">
+                                        <p style="display: inline-block; padding-right: 10px;"><a href="{% url 'profilevisit' post.user.id %}" ><img src=" {{ comment.profile.prof_pic.url }}" class= "post" alt="Image" style="width: 25px; height: 25px; border-radius: 50%;"></a></p>                                
+                                        <p style="font-weight: bold; font-size: 15px;padding-right: 5px; display: inline-block;font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">{{comment.profile}}</p>                                                
+                                        <p style="font-size: 16px; display:inline-block;">{{comment.comment}}</p>
+                                    
+                                </div>    
+                                {% endfor %}                                                                                        
+                            {% else %}
+                                <h3 style="text-align:center;"> No comments</h3>                            
+                            {% endif %}                        
+                        </div>
+                        <br>
+                        <div class="comment">                            
+                            <form action="{% url 'detail' post.id %}" style="width:80%;"  method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                
+                                {% bootstrap_form commentform %}                
+                                <input type="submit" class="btn btn-success btn-lg " value="comment">            
+                            </form>        
+                        </div>                    
+                </div>
+            </div>        
+        </div>
+        <div class="col"></div>
+        <style>
+            .holder::-webkit-scrollbar {
+                display: none;
+            }
+
+            /* Hide scrollbar for IE, Edge and Firefox */
+            .holder {
+              -ms-overflow-style: none;  /* IE and Edge */
+              scrollbar-width: none;  /* Firefox */
+            }
+
+        </style>
+    </div>
+</div>
+{% endblock %}
